@@ -1,0 +1,141 @@
+#include <iostream>
+using namespace std;
+class publication
+{
+public:
+    string title;
+    float price;
+    void add()
+    {
+        cout << "\n----Enter the publication information---- \n";
+        cout << "\nEnter the title: ";
+        cin >> title;
+        cout << "Enter the price: ";
+        cin >> price;
+    }
+    void display()
+    {
+        cout << "\n";
+        cout << "\nTitle of the publication: " << title << endl;
+        cout << "Publicaiotn price: " << price << endl;
+    }
+};
+
+class book : public publication
+{
+private:
+    float page_count;
+    int temp;
+
+public:
+    void add_book()
+    {
+        try
+        {
+            add();
+            cout << "Enter the number of pages: ";
+            cin >> page_count;
+            temp=page_count;
+            if (temp != page_count)
+            {
+                throw page_count;
+            }
+        }
+        catch (...)
+        { // to catch all types of exceptions we use catch(...)
+            title = "--";
+            price = 0;
+            page_count = 0;
+        }
+    }
+    void display_book()
+    {
+        display();
+        cout << "Number of pages are: " << page_count;
+        cout << endl;
+    }
+};
+
+class tape : public publication
+{
+private:
+    float tape_time;
+    int temp;
+
+public:
+    void add_tape()
+    {
+        try
+        {
+            add();
+            cout << "Enter the play duration of the tape: ";
+            cin >> tape_time;
+            temp=tape_time;
+            if (temp == tape_time)
+            {
+                throw tape_time;
+            }
+        }
+        catch (...)
+        {
+            cout << "Invalid play time";
+            title = "--";
+            price = 0;
+            tape_time = 0;
+        }
+    }
+    void display_tape()
+    {
+        display();
+        cout << "Total duration of tape is " << tape_time;
+        cout << endl;
+    }
+};
+
+int main()
+{
+    book b1[10];
+    tape t1[10];
+    int ch, b_count=0, t_count=0;
+    do
+    {
+        cout<<endl;
+        cout << "-----------Publication database system----------";
+        cout << "\nMenu";
+        cout << "\n1.Add information to the book";
+        cout << "\n2.Add information to the tape";
+        cout << "\n3.Display Book information ";
+        cout << "\n4.Display Tape information";
+        cout << "\n5.EXIT";
+        cout << "\nEnter your choice: ";
+        cin >> ch;
+        switch (ch)
+        {
+        case 1:
+            b1[b_count].add_book();
+            b_count++;
+            break;
+        case 2:
+            t1[t_count].add_tape();
+            t_count++;
+            break;
+        case 3:
+            cout << "--Data of book publication--" << endl;
+            for (int i = 0; i < b_count; i++)
+            {
+                b1[i].display_book();
+            }
+            break;
+        case 4:
+            cout << "--Data of tape publicaition--";
+            for (int i = 0; i < t_count; i++)
+            {
+                t1[i].display_tape();
+            }
+            break;
+        case 5:
+            break;
+        }
+    } while (ch != 5);
+    return 0;
+}

@@ -1,0 +1,53 @@
+#include<iostream>
+using namespace std;
+#include<fstream>
+class student{
+    char name[20];
+    int id;
+    char div[2];
+    public:
+        void accept(){
+            cout<<"\nEnter name:";
+            cin>>name;
+            cout<<"\nEnter id:";
+            cin>>id;
+            cout<<"\nEnter division:";
+            cin>>div;
+            cout<<endl;
+        }
+        void display(){
+            cout<<"\nName of student:"<<name;
+            cout<<"\nId of the student:"<<id;
+            cout<<"\nDivision of the sutdent:"<<div<<"\n";
+        }
+
+};
+
+int main(){
+    student s[8];
+    fstream f;
+    int i,n;
+    f.open("students_data.txt",ios::out);
+    cout<<"\nEnter the total number of students data you want to enter:";
+    cin>>n;
+    cout<<"\nEnter the data(name/id/division:)";
+    for(int i=0;i<n;i++){
+        cout<<"\nEnter information of"<<i+1<<" student ";
+        s[i].accept();
+        f.clear();
+        f.write((char*)&s[i],sizeof s[i]);
+
+    }
+
+    f.close();
+    cout<<"\nFile closed successfully";
+    f.open("students_data.txt",ios::in);
+    cout<<"\nInformation of students are as follows";
+    cout<<endl;
+    for(int i=0;i<n;i++){
+        f.read((char*)&s[i],sizeof s[i]); //syntax we have to give the size of array it is in the syntax only
+        s[i].display();
+    }
+    f.close();
+    return 0;
+}
